@@ -27,7 +27,8 @@ function new() {
   dir="archive"
 
   cd "$dir"
-  acc new "$contest"
+  # acc new "$contest"
+  acc add "$contest" --choice all
   cd -
   cat "$1" > contest.txt
 }
