@@ -1,0 +1,4 @@
+github.com/mrsombre/codingame-golang-merger v0.0.0-20231207160304-d5f8e309e537 h1:Lk0OtqWHMczRDPM/CmNDmPAy3dpJQe/xo0Fk5SRkN7Y=
+github.com/mrsombre/codingame-golang-merger v0.0.0-20231207160304-d5f8e309e537/go.mod h1:bw/VOT4cZaYc1ucutHrdq6kd6srUQcgn5kC80nVgkgU=
+github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
+github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
