@@ -52,98 +52,52 @@ func bfs(start int, neighbors [][]int) (int, int) {
 func main() {
 	defer flush()
 
-	_, K := ni2()
-	dbg("K: ", K)
-	S := ns()
-	dbg("S: ", S)
+	// 10
 
-	alphabet := "abcdefghijklmnopqrstuvwxyz"
-	alphabetNext := make([][26]int, len(S)+1)
-	// for i := 0; i < len(S); i++ {
-	// 	ss := make([]int, len(alphabet))
-	// 	for _i := 0; _i < len(alphabet); _i++ {
-	// 		ss[_i] = -1
-	// 	}
-	// 	alphabetNext[i] = ss
-	// }
-	for i := 0; i < 26; i++ {
-		alphabetNext[len(S)][i] = -1
+	N, Q := ni2()
+	As := nis(N)
+
+	querys := make([][]int, Q)
+	for i := 0; i < Q; i++ {
+		querys[i] = nis(3)
 	}
-	// 次出現位置テーブルの構築
-	for i := len(S) - 1; i >= 0; i-- {
-		copy(alphabetNext[i][:], alphabetNext[i+1][:])
-		c := S[i] - 'a'
-		alphabetNext[i][c] = i
-	}
-	// for index, s := range S {
-	// 	s := string(s)
-	// 	alphaNum := strings.Index(alphabet, s)
-	// 	for ni := 0; ni < len(S); ni++ {
-	// 		if ni > index {
-	// 			break
-	// 		}
-	// 		nn := alphabetNext[ni][alphaNum]
-	// 		if nn != -1 {
-	// 			continue
-	// 		}
-	// 		alphabetNext[ni][alphaNum] = index
-	// 	}
-	// }
 
-	// fmt.Printf("%+v", alphabetNext)
-	// for rowIndex := 0; rowIndex < 26; rowIndex++ {
-	// 	fmt.Printf("%s ", string(alphabet[rowIndex]))
-	// 	for columnIndex := 0; columnIndex < len(S); columnIndex++ {
-	// 		fmt.Printf("%d ", alphabetNext[columnIndex][rowIndex])
-	// 	}
-	// 	fmt.Println("")
-	// }
-
-	answer := ""
-	for sindex := 0; sindex < len(S); sindex++ {
-		for _, alpha := range alphabet {
-			alphaNum := strings.Index(alphabet, string(alpha))
-			nextPos := alphabetNext[sindex][alphaNum]
-			if nextPos == -1 {
-				continue
-			}
-			maxLength := nextPos + K - (len(answer) + 1) + 1
-			if maxLength <= len(S) {
-				sindex = nextPos
-				answer += string(alpha)
-				break
-			}
-		}
-		if len(answer) == K {
-			break
+	currentIndex := 0
+	for i := 0; i < Q; i++ {
+		query := querys[i]
+		dbg("query: ", query[0])
+		if query[0] == 1 {
+			fromI := ((query[1] - 1 - currentIndex) + N) % N
+			toI := ((query[2] - 1 - currentIndex) + N) % N
+			dbg("original index", query[1], query[2])
+			from := As[fromI]
+			to := As[toI]
+			dbg("ft", fromI, from, toI, to, As)
+			As[fromI] = to
+			As[toI] = from
+			dbg("As", As[fromI], As[toI])
+			dbg("2out", As, currentIndex)
+		} else if query[0] == 2 {
+			currentIndex = (currentIndex + 1) % N
+		} else {
+			targetIndex := (query[1] - 1 - currentIndex) + N
+			dbg("3out", As, currentIndex)
+			out(As[targetIndex%N])
 		}
 	}
 
-	out(answer)
+	// dbg("c1score: ", c1score, "c2score: ", c2score)
 
-	// all := make([][]int, 0, H)
-	// for i := 0; i < H; i++ {
-	// 	rowSlice := nis(W)
-	// 	dbg("rowSlice: ", rowSlice)
-	// 	all = append(all, rowSlice)
-	// }
-	// rowAggregate := make([]int, H)
-	// columnAggregate := make([]int, W)
-	// for rowIndex, row := range all {
-	// 	for columnIndex, v := range row {
-	//      dbg("v: ", v, "index: ", columnIndex ,"rowindex: ", rowIndex, "row: ", row)
-	// 		rowAggregate[rowIndex] += v
-	// 		columnAggregate[columnIndex] += v
+	// answer := ""
+	// Q := ni()
+	// for i := 0; i < Q; i++ {
+	// 	l, r := ni2()
+	// 	answer += fmt.Sprintf("%d %d", c1score[r]-c1score[l-1], c2score[r]-c2score[l-1])
+	// 	if i < Q-1 {
+	// 		answer += "\n"
 	// 	}
 	// }
 	//
-	// for i := 0; i < H; i++ {
-	//    texts := make([]int, W)
-	// 	for j := 0; j < W; j++ {
-	// 		// out(rowAggregate[i] + columnAggregate[j] - all[i][j])
-	//      // text += itoa(rowAggregate[i] + columnAggregate[j] - all[i][j]) + " "
-	//      texts[j] = rowAggregate[i] + columnAggregate[j] - all[i][j]
-	// 	}
-	//    outis(texts)
-	// }
+	// out(answer)
+
 }

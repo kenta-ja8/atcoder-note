@@ -12,7 +12,7 @@ fi
 
 function submit() {
   contest=$(cat ./contest.txt)
-  task=$2
+  task=$1
   dir="archive/$contest/$task"
 
   go run github.com/mrsombre/codingame-golang-merger/cmd/cgmerge -o "$dir/merged.go"
@@ -27,18 +27,18 @@ function new() {
   dir="archive"
 
   cd "$dir"
-  # acc new "$contest"
-  acc add "$contest" --choice all
+  acc new "$contest"
   cd -
   cat "$1" > contest.txt
 }
 
-# function add() {
-#   dir="archive/$1"
-#   cd "$dir"
-#   acc add
-#   cd -
-# }
+function add() {
+  contest=$(cat ./contest.txt)
+  dir="archive/$contest"
+  cd "$dir"
+  acc add --choice all
+  cd -
+}
 
 function test() {
   task=$1
@@ -54,9 +54,9 @@ submit)
 new)
   new "$2"
   ;;
-# add)
-#   add "$2"
-#   ;;
+add)
+  add "$2"
+  ;;
 test)
   test "$2"
   ;;
